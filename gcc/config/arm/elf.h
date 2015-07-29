@@ -56,8 +56,7 @@
 #undef SUBSUBTARGET_EXTRA_SPECS
 #define SUBSUBTARGET_EXTRA_SPECS
 
-#ifndef ASM_SPEC
-#define ASM_SPEC "\
+#define DEFAULT_ASM_SPEC "\
 %{mbig-endian:-EB} \
 %{mlittle-endian:-EL} \
 %(asm_cpu_spec) \
@@ -66,6 +65,9 @@
 %{mthumb-interwork:-mthumb-interwork} \
 %{mfloat-abi=*} %{mfpu=*} \
 %(subtarget_extra_asm_spec)"
+
+#ifndef ASM_SPEC
+#define ASM_SPEC DEFAULT_ASM_SPEC
 #endif
 
 /* The ARM uses @ are a comment character so we need to redefine
@@ -103,8 +105,9 @@
 /* We put ARM and Thumb-2 jump tables in the text section, because it makes
    the code more efficient, but for Thumb-1 it's better to put them out of
    band unless we are generating compressed tables.  */
-#define JUMP_TABLES_IN_TEXT_SECTION					\
-   (TARGET_32BIT || (TARGET_THUMB && (optimize_size || flag_pic)))
+#define JUMP_TABLES_IN_TEXT_SECTION                                     \
+   (TARGET_32BIT || (TARGET_THUMB && !inline_thumb1_jump_table		\
+                    && (optimize_size || flag_pic)))
 
 #ifndef LINK_SPEC
 #define LINK_SPEC "%{mbig-endian:-EB} %{mlittle-endian:-EL} -X"
