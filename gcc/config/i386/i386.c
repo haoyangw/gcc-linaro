@@ -12720,6 +12720,7 @@ legitimate_pic_address_disp_p (rtx disp)
 	    }
 	  else if (!SYMBOL_REF_FAR_ADDR_P (op0)
 		   && SYMBOL_REF_LOCAL_P (op0)
+                       && !TARGET_HAS_BIONIC
 		   && ix86_cmodel != CM_LARGE_PIC)
 	    return true;
 	  break;
