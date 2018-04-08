@@ -52,10 +52,6 @@
 #define ANDROID_ASM_SPEC \
   "--noexecstack"
 
-#define CRYSTAX_LIB_SPEC \
-  "%{static: -lcrystax} " \
-  "%{!static: -Bdynamic -lcrystax}"
-
 #define ANDROID_LIB_SPEC \
   "%{!static: -ldl} \
   %{pthread: -lc}"
